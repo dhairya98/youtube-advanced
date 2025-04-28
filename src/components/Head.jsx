@@ -29,7 +29,7 @@ const Head = () => {
           className="w-1/2 border border-gray-400 p-2 rounded-l-full"
           type="text"
         />
-        <button className="border border-gray-400 p-2 rounded-r-full cursor-pointer bg-gray-100">
+        <button className="border border-gray-400 p-2 rounded-r-full cursor-pointer bg-gray-100 w-30 border-l-0">
           Search
         </button>
       </div>

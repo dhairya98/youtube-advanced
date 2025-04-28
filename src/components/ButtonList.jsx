@@ -1,7 +1,32 @@
 import React from "react";
+import Button from "./Button";
+
+const list = [
+  "All",
+  "Gaming",
+  "Songs",
+  "Live",
+  "Soccer",
+  "Cricket",
+  "Cooking",
+  "Comedy",
+  "Valentines",
+  "Badminton",
+  "Wrestling",
+  "Vlogs",
+];
 
 const ButtonList = () => {
-  return <div>ButtonList</div>;
+  return (
+    <div className="relative w-full">
+      <div className="flex overflow-x-auto scrollbar-hide">
+        {list.map((item) => (
+          <Button name={item} />
+        ))}
+      </div>
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-white to-transparent" />
+    </div>
+  );
 };
 
 export default ButtonList;
