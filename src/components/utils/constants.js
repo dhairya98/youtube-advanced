@@ -37,3 +37,6 @@ const isShortVideo = (duration) => {
   // }
   return false; // only seconds => short
 };
+
+export const YOUTUBE_SEARCH_API =
+  "https://clients1.google.com/complete/search?client=youtube&gs_ri=youtube&ds=yt&q=";

@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "./utils/appSlice";
+import { YOUTUBE_SEARCH_API } from "./utils/constants";
 
 const Head = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
   };
+  const getSearchSuggestions = async () => {
+    const response = await fetch(YOUTUBE_SEARCH_API + searchQuery);
+    const text = await response.text();
+    console.log("Raw Text:", text);
+  };
+  useEffect(() => {
+    const timer = setTimeout(() => getSearchSuggestions(), 200);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchQuery]);
+
   return (
     <div className="grid grid-flow-col p-5 m-2 shadow-lg">
       <div className="flex col-span-1">
@@ -28,6 +42,7 @@ const Head = () => {
         <input
           className="w-1/2 border border-gray-400 p-2 rounded-l-full"
           type="text"
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
         <button className="border border-gray-400 p-2 rounded-r-full cursor-pointer bg-gray-100 w-30 border-l-0">
           Search
