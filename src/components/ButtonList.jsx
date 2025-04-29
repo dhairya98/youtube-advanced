@@ -13,7 +13,6 @@ const list = [
   "Valentines",
   "Badminton",
   "Wrestling",
-  "Vlogs",
 ];
 
 const ButtonList = () => {
