@@ -12,7 +12,14 @@ const Head = () => {
   const getSearchSuggestions = async () => {
     const response = await fetch(YOUTUBE_SEARCH_API + searchQuery);
     const text = await response.text();
-    console.log("Raw Text:", text);
+    const cleaned = text
+      .replace(/^window\.google\.ac\.h\(/, "")
+      .replace(/\);?$/, "");
+    const parsed = JSON.parse(cleaned);
+
+    const suggestions = parsed[1].map((item) => item[0]);
+
+    console.log(suggestions);
   };
   useEffect(() => {
     const timer = setTimeout(() => getSearchSuggestions(), 200);
