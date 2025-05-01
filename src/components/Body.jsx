@@ -1,7 +1,5 @@
 import React from "react";
 import Sidebar from "./Sidebar";
-import MainContainer from "./MainContainer";
-import Watch from "./Watch";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 

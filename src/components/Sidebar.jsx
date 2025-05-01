@@ -1,6 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { changeFilter } from "./utils/videoSlice";
 
 const Sidebar = () => {
   const isHamburgerOpen = useSelector((store) => store.app.isMenuOpen);
@@ -35,10 +36,10 @@ const Sidebar = () => {
       <div>
         <h2 className="font-semibold text-sm mb-2">Watch Later</h2>
         <div className="space-y-1 text-sm text-gray-700">
-          <SidebarItem label="Music" />
-          <SidebarItem label="Sports" />
-          <SidebarItem label="Gaming" />
-          <SidebarItem label="Movies" />
+          <SidebarItem label="Kids" />
+          <SidebarItem label="Motivation" />
+          <SidebarItem label="Grooming" />
+          <SidebarItem label="Dhairya Anchal" />
         </div>
       </div>
     </div>
@@ -46,8 +47,21 @@ const Sidebar = () => {
 };
 
 const SidebarItem = ({ to, label }) => {
+  const selectedFilter = useSelector((state) => state.videoData.selectedFilter);
+  const dispatch = useDispatch();
+  const handleClick = (item) => {
+    const value = item === "All" ? "" : item;
+    if (selectedFilter !== value) {
+      dispatch(changeFilter(value));
+    }
+  };
+  const isSelected = selectedFilter === label;
   const content = (
-    <div className="px-2 py-1 rounded hover:bg-gray-100 cursor-pointer">
+    <div
+      className={`px-2 py-1 rounded hover:bg-gray-100 cursor-pointer 
+      ${isSelected ? "bg-gray-100" : ""}`}
+      onClick={() => handleClick(label)}
+    >
       {label}
     </div>
   );

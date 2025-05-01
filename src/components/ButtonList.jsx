@@ -1,7 +1,28 @@
 import React from "react";
-import Button from "./Button";
+import { useDispatch } from "react-redux";
+import { changeFilter } from "./utils/videoSlice";
+const list = [
+  "All",
+  "Gaming",
+  "Songs",
+  "Live",
+  "Soccer",
+  "Cricket",
+  "Cooking",
+  "Comedy",
+  "Valentines",
+  "Badminton",
+  "Wrestling",
+];
 
-const ButtonList = ({ list, selectedButton, setSelectedButton }) => {
+const ButtonList = ({ selectedButton }) => {
+  const dispatch = useDispatch();
+  const handleClick = (item) => {
+    const value = item === "All" ? "" : item;
+    if (selectedButton !== value) {
+      dispatch(changeFilter(value));
+    }
+  };
   return (
     <div className="relative w-full">
       <div className="flex overflow-x-auto scrollbar-hide">
@@ -13,12 +34,7 @@ const ButtonList = ({ list, selectedButton, setSelectedButton }) => {
               className={`px-5 py-2 m-2 cursor-pointer bg-gray-200 rounded-lg ${
                 isSelected ? "bg-gray-500 text-white" : ""
               }`}
-              onClick={() => {
-                const newVal = item === "All" ? "" : item;
-                if (selectedButton !== newVal) {
-                  setSelectedButton(newVal);
-                }
-              }}
+              onClick={() => handleClick(item)}
             >
               {item}
             </button>

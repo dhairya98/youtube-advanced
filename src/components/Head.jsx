@@ -78,13 +78,7 @@ const Head = () => {
           </div>
         )}
       </div>
-      <div className="col-span-1">
-        <img
-          src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"
-          alt="user icon"
-          className="h-8"
-        />
-      </div>
+      <div className="col-span-1">Built with ❤️ and passion by Dhairya</div>
     </div>
   );
 };

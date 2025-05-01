@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import VideoCard, { AdVideoCard } from "./VideoCard";
-import { getYouTubeVideoDetails, searchYouTubeVideos } from "./utils/constants";
+import React from "react";
+import VideoCard from "./VideoCard";
 import { Link } from "react-router-dom";
-import { getVideos } from "./utils/getVideos";
 
 const VideoContainer = ({ videos }) => {
   return (

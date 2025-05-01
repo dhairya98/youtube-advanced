@@ -1,41 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ButtonList from "./ButtonList";
 import VideoContainer from "./VideoContainer";
-import { getVideos } from "./utils/getVideos";
-
-const list = [
-  "All",
-  "Gaming",
-  "Songs",
-  "Live",
-  "Soccer",
-  "Cricket",
-  "Cooking",
-  "Comedy",
-  "Valentines",
-  "Badminton",
-  "Wrestling",
-];
+import { useVideoSearch } from "./utils/useVideoSearch";
 
 const MainContainer = () => {
-  const [videos, setVideos] = useState([]);
-  const [selectedButton, setSelectedButton] = useState("");
-
-  useEffect(() => {
-    const fetchVideos = async () => {
-      const data = await getVideos(selectedButton);
-      setVideos(data);
-    };
-
-    fetchVideos();
-  }, [selectedButton]);
+  const { videos, selectedFilter } = useVideoSearch();
   return (
     <div>
-      <ButtonList
-        list={list}
-        selectedButton={selectedButton}
-        setSelectedButton={setSelectedButton}
-      />
+      <ButtonList selectedButton={selectedFilter} />
       <VideoContainer videos={videos} />
     </div>
   );
