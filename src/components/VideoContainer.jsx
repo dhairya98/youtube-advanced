@@ -2,24 +2,17 @@ import React, { useEffect, useState } from "react";
 import VideoCard, { AdVideoCard } from "./VideoCard";
 import { getYouTubeVideoDetails, searchYouTubeVideos } from "./utils/constants";
 import { Link } from "react-router-dom";
+import { getVideos } from "./utils/getVideos";
 
-const VideoContainer = () => {
-  const [videos, setVideos] = useState([]);
-  useEffect(() => {
-    getVideos();
-  }, []);
-  const getVideos = async () => {
-    const videoIds = await searchYouTubeVideos("");
-    const videosWithStats = await getYouTubeVideoDetails(videoIds);
-    setVideos(videosWithStats);
-  };
+const VideoContainer = ({ videos }) => {
   return (
-    <div className="flex flex-wrap">
-      {/* {videos[0] && <AdVideoCard info={videos[0]} />} */}
+    <div className="grid grid-cols-3 gap-4 items-stretch">
       {videos.map((video) => (
-        <Link key={video.id} to={"/watch?v=" + video.id}>
-          <VideoCard key={video.id} info={video} />
-        </Link>
+        <div key={video.id} className="h-full ">
+          <Link to={"/watch?v=" + video.id}>
+            <VideoCard info={video} />
+          </Link>
+        </div>
       ))}
     </div>
   );

@@ -29,7 +29,9 @@ function App() {
     <Provider store={appStore}>
       <div>
         <Head />
-        <RouterProvider router={appRouter} />
+        <div className="h-[calc(100vh-100px)] overflow-y-auto">
+          <RouterProvider router={appRouter} />
+        </div>
       </div>
     </Provider>
   );
