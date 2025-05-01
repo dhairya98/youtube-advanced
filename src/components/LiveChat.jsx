@@ -1,0 +1,63 @@
+import React, { useEffect, useState } from "react";
+import ChatMessage from "./ChatMessage";
+import { useDispatch, useSelector } from "react-redux";
+import { addMessage } from "./utils/liveChatSlice";
+import { generateRandomMessage } from "./utils/helper";
+
+const LiveChat = () => {
+  const [liveMessage, setLiveMessage] = useState("");
+  const dispatch = useDispatch();
+  const liveChatMessage = useSelector((store) => store.liveChat.messages);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const { name, message } = generateRandomMessage();
+      dispatch(
+        addMessage({
+          name: name,
+          message: message,
+        })
+      );
+    }, 500);
+
+    return () => clearInterval(timer);
+  }, []);
+  return (
+    <>
+      <div className="ml-2 w-full p-2 border border-black bg-slate-100 rounded-lg ">
+        <h1 className="font-bold text-lg">Live Chat: </h1>
+        <div className="flex flex-col-reverse h-[550px] overflow-y-scroll">
+          {liveChatMessage.map((chatMessage, id) => (
+            <ChatMessage
+              key={id}
+              name={chatMessage.name}
+              message={chatMessage.message}
+            />
+          ))}
+        </div>
+      </div>
+      <form
+        className="w-full p-2 m-2 border border-black rounded-sm"
+        onSubmit={(e) => {
+          e.preventDefault();
+          dispatch(
+            addMessage({
+              name: "Dhairya Anchal",
+              message: liveMessage,
+            })
+          );
+          setLiveMessage("");
+        }}
+      >
+        <input
+          className="w-80 px-2"
+          type="text"
+          value={liveMessage}
+          onChange={(e) => setLiveMessage(e.target.value)}
+        />
+        <button className="px-2 mx-2 bg-green-100">Send</button>
+      </form>
+    </>
+  );
+};
+
+export default LiveChat;
