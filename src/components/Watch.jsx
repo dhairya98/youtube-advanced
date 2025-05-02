@@ -24,32 +24,31 @@ const Watch = () => {
 
   const isHamburgerOpen = useSelector((store) => store.app.isMenuOpen);
   return (
-    <div className="flex flex-col flex-1">
-      <div className="px-5 flex">
-        <div>
-          <iframe
-            width={isHamburgerOpen ? "800" : "1050"}
-            height="600"
-            src={
-              "https://www.youtube.com/embed/" +
-              searchParams.get("v") +
-              "?&autoplay=1"
-            }
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            className="rounded-lg"
-            auto
-          ></iframe>
+    <div className="flex flex-col flex-1 px-5">
+      <div className="flex flex-col lg:flex-row gap-4 w-full">
+        <div className="flex-1">
+          <div className="w-full aspect-video">
+            <iframe
+              src={`https://www.youtube.com/embed/${searchParams.get(
+                "v"
+              )}?autoplay=1`}
+              className="w-full h-full rounded-lg"
+              allowFullScreen
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            />
+          </div>
           {videoData && <VideoMeta videoData={videoData} />}
+
+          <div className="mt-6">
+            <CommentsContainer />
+          </div>
         </div>
-        <div className="">
+
+        <div className="w-full lg:w-[400px] shrink-0">
           <LiveChat />
         </div>
       </div>
-      <CommentsContainer />
     </div>
   );
 };

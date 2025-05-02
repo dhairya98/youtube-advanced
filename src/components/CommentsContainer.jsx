@@ -43,7 +43,7 @@ const CommentsContainer = () => {
     };
 
     setVideoComments([newComment, ...videoComments]);
-    setCommentInput(""); // clear input
+    setCommentInput("");
   };
   return (
     <div className="m-5 p-2">
