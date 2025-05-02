@@ -18,7 +18,7 @@ const appRouter = createBrowserRouter([
         element: <MainContainer />,
       },
       {
-        path: "/results",
+        path: "/search",
         element: <SearchResults />,
       },
       {

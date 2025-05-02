@@ -7,7 +7,6 @@ export const useVideoSearch = () => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect called", selectedFilter);
     const fetch = async () => {
       const data = await getVideos(selectedFilter);
       setVideos(data);

@@ -40,7 +40,7 @@ const Head = () => {
   }, [searchQuery]);
 
   return (
-    <div className="flex items-center justify-between px-4 py-3 shadow-md bg-white fixed top-0 z-50 min-h-[64px] w-screen">
+    <div className="flex items-center justify-between px-4 py-3 bg-white fixed top-0 z-50 min-h-[64px] w-screen">
       <div className="flex items-center space-x-3">
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0evWy6vmua96UkF8RqHQv-SoBcuu3V9fwZw&s"
@@ -77,12 +77,14 @@ const Head = () => {
           <div className="absolute top-12 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50">
             <ul>
               {searchSuggestions?.map((suggestion, i) => (
-                <li
-                  key={i}
-                  className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
-                >
-                  <Link to={"/search?v=" + suggestion}>{suggestion}</Link>
-                </li>
+                <Link to={"/search?v=" + suggestion}>
+                  <li
+                    key={i}
+                    className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                  >
+                    {suggestion}
+                  </li>
+                </Link>
               ))}
             </ul>
           </div>

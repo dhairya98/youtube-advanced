@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { changeFilter } from "./utils/videoSlice";
 
 const Sidebar = () => {
@@ -43,11 +43,13 @@ const Sidebar = () => {
 
 const SidebarItem = ({ to, label }) => {
   const selectedFilter = useSelector((state) => state.videoData.selectedFilter);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleClick = (item) => {
     const value = item === "All" ? "" : item;
     if (selectedFilter !== value) {
       dispatch(changeFilter(value));
+      navigate("/");
     }
   };
   const isSelected = selectedFilter === label;

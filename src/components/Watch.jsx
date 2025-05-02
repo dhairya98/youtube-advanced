@@ -25,7 +25,7 @@ const Watch = () => {
   const isHamburgerOpen = useSelector((store) => store.app.isMenuOpen);
   return (
     <>
-      <Head />
+      {/* <Head /> */}
       <div className="flex flex-col flex-1 px-5 mt-15">
         <div className="flex flex-col lg:flex-row gap-4 w-full">
           <div className="flex-1">

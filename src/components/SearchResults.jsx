@@ -15,11 +15,11 @@ const SearchResults = () => {
     dispatch(changeFilter(searchParams.get("v")));
   });
   return (
-    <div>
+    <div className="mt-14">
       {videos && (
         <div>
-          <Head />
-          <VideoContainer videos={videos} />
+          {/* <Head /> */}
+          <VideoContainer videos={videos} search={true} />
         </div>
       )}
     </div>
