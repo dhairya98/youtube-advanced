@@ -6,7 +6,7 @@ import { useVideoSearch } from "./utils/useVideoSearch";
 const MainContainer = () => {
   const { videos, selectedFilter } = useVideoSearch();
   return (
-    <div>
+    <div className="mt-15">
       <ButtonList selectedButton={selectedFilter} />
       <VideoContainer videos={videos} />
     </div>

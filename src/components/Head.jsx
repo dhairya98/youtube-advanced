@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "./utils/appSlice";
 import { YOUTUBE_SEARCH_API } from "./utils/constants";
 import { cacheResult } from "./utils/searchSlice";
+import { Link } from "react-router-dom";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,46 +40,57 @@ const Head = () => {
   }, [searchQuery]);
 
   return (
-    <div className="grid grid-flow-col p-5 m-2 shadow-lg">
-      <div className="flex col-span-1">
+    <div className="flex items-center justify-between px-4 py-3 shadow-md bg-white fixed top-0 z-50 min-h-[64px] w-screen">
+      <div className="flex items-center space-x-3">
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0evWy6vmua96UkF8RqHQv-SoBcuu3V9fwZw&s"
           alt="menu"
-          className="h-8 cursor-pointer"
+          className="h-6 w-6 cursor-pointer"
           onClick={toggleMenuHandler}
         />
-        <a>
+        <a href="/">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Logo_of_YouTube_%282015-2017%29.svg/1280px-Logo_of_YouTube_%282015-2017%29.svg.png"
-            alt="youtube logo"
-            className="h-8 mx-2"
+            alt="YouTube"
+            className="h-6"
           />
         </a>
       </div>
-      <div className="col-span-10 px-10 ml-60">
-        <input
-          className="px-5 w-1/2 border border-gray-400 p-2 rounded-l-full"
-          type="text"
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onFocus={() => setShowSuggestions(true)}
-          onBlur={() => setShowSuggestions(false)}
-        />
-        <button className="border border-gray-400 p-2 rounded-r-full cursor-pointer bg-gray-100 w-30 border-l-0">
-          Search
-        </button>
+
+      <div className="relative flex flex-1 justify-center max-w-2xl">
+        <div className="flex w-full max-w-xl">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+            placeholder="Search"
+            className="flex-1 px-4 py-2 border border-gray-400 rounded-l-full text-sm"
+          />
+          <button className="px-4 py-2 border border-gray-400 border-l-0 bg-gray-100 rounded-r-full text-sm">
+            Search
+          </button>
+        </div>
+
         {showSuggestions && (
-          <div className="absolute w-[33.5rem] bg-white z-10 shadow-lg rounded-lg border border-gray-100">
+          <div className="absolute top-12 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50">
             <ul>
-              {searchSuggestions?.map((suggestion) => (
-                <li className="p-2 hover:bg-gray-100 cursor-pointer">
-                  {suggestion}
+              {searchSuggestions?.map((suggestion, i) => (
+                <li
+                  key={i}
+                  className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                >
+                  <Link to={"/search?v=" + suggestion}>{suggestion}</Link>
                 </li>
               ))}
             </ul>
           </div>
         )}
       </div>
-      <div className="col-span-1">Built with ❤️ and passion by Dhairya</div>
+      <div className="hidden md:block text-sm font-medium text-gray-700">
+        Built with ❤️ and passion by Dhairya
+      </div>
     </div>
   );
 };

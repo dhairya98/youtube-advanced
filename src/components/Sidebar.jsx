@@ -8,8 +8,7 @@ const Sidebar = () => {
   if (!isHamburgerOpen) return null;
 
   return (
-    <div className="p-4 fixed w-68 h-screen shadow-lg bg-white flex-shrink-0 text-gray-800 space-y-6">
-      {/* Main Navigation */}
+    <div className="p-4 fixed top-17 left-0 h-screen w-full lg:w-64 shadow-lg bg-white flex-shrink-0 text-gray-800 space-y-6 z-50">
       <div className="space-y-2">
         <SidebarItem to="/" label="Home" />
         <SidebarItem label="Shorts" />
@@ -18,8 +17,6 @@ const Sidebar = () => {
       </div>
 
       <hr className="border-gray-200" />
-
-      {/* Subscriptions */}
       <div>
         <h2 className="font-semibold text-sm mb-2">Subscriptions</h2>
         <div className="space-y-1 text-sm text-gray-700">
@@ -32,14 +29,12 @@ const Sidebar = () => {
 
       <hr className="border-gray-200" />
 
-      {/* Watch Later */}
       <div>
         <h2 className="font-semibold text-sm mb-2">Watch Later</h2>
         <div className="space-y-1 text-sm text-gray-700">
           <SidebarItem label="Kids" />
           <SidebarItem label="Motivation" />
           <SidebarItem label="Grooming" />
-          <SidebarItem label="Dhairya Anchal" />
         </div>
       </div>
     </div>

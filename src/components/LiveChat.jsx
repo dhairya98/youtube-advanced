@@ -3,12 +3,15 @@ import ChatMessage from "./ChatMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage } from "./utils/liveChatSlice";
 import { generateRandomMessage } from "./utils/helper";
+import { useVideoSearch } from "./utils/useVideoSearch";
+import VideoContainer from "./VideoContainer";
 
 const LiveChat = () => {
   const [liveMessage, setLiveMessage] = useState("");
   const dispatch = useDispatch();
   const isHamburgerOpen = useSelector((store) => store.app.isMenuOpen);
   const liveChatMessage = useSelector((store) => store.liveChat.messages);
+  const { videos } = useVideoSearch();
   useEffect(() => {
     const timer = setInterval(() => {
       const { name, message } = generateRandomMessage();
@@ -57,6 +60,7 @@ const LiveChat = () => {
         />
         <button className="px-2 mx-2 bg-green-100">Send</button>
       </form>
+      <VideoContainer videos={videos.slice(0, 20)} watch={true} />
     </>
   );
 };

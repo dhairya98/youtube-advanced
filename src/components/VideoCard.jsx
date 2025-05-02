@@ -1,14 +1,24 @@
 import React from "react";
 
-const VideoCard = ({ info }) => {
+const VideoCard = ({ info, watch }) => {
   const { snippet, statistics } = info;
   const { channelTitle, title, thumbnails } = snippet;
 
   return (
-    <div className="p-2 m-2 flex flex-col">
-      <img className="rounded-lg" alt="thumbnail" src={thumbnails.medium.url} />
+    <div
+      className={`flex ${
+        watch ? "p-2 flex-row items-start" : "p-2 m-2 flex-col"
+      }`}
+    >
+      <img
+        className={`rounded-lg ${watch ? "h-20 mr-5" : ""}`}
+        alt="thumbnail"
+        src={thumbnails.medium.url}
+      />
       <ul>
-        <li className="font-bold py-2">{title.slice(0, 50) + "..."}</li>
+        <li className={`font-bold ${watch ? "p-0" : "py-2"}`}>
+          {title.slice(0, watch ? 20 : 50) + "..."}
+        </li>
         <li>{channelTitle}</li>
         <li>{statistics.viewCount} views</li>
       </ul>
