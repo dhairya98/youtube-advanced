@@ -1,18 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeMenu } from "./utils/appSlice";
 import { useSearchParams } from "react-router-dom";
 import CommentsContainer from "./CommentsContainer";
 import LiveChat from "./LiveChat";
 import VideoMeta from "./VideoMeta";
+import { getYouTubeVideoDetails } from "./utils/constants";
 
 const Watch = () => {
   const [searchParams] = useSearchParams();
-
   const dispatch = useDispatch();
+  const [videoData, setVideoData] = useState(null);
+  const fetchVideoMeta = async () => {
+    const data = await getYouTubeVideoDetails(searchParams.get("v"));
+    console.log("Data", data);
+    setVideoData(data);
+  };
 
   useEffect(() => {
     dispatch(closeMenu());
+    fetchVideoMeta();
   }, []);
 
   const isHamburgerOpen = useSelector((store) => store.app.isMenuOpen);
@@ -36,7 +43,7 @@ const Watch = () => {
             className="rounded-lg"
             auto
           ></iframe>
-          <VideoMeta />
+          {videoData && <VideoMeta videoData={videoData} />}
         </div>
         <div className="">
           <LiveChat />

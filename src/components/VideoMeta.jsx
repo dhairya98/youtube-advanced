@@ -9,23 +9,27 @@ const ActionButton = ({ icon, label }) => {
   );
 };
 
-const VideoMeta = () => {
+const VideoMeta = ({ videoData }) => {
+  const { channelTitle, description, thumbnails, title, publishedAt } =
+    videoData[0]?.snippet || {};
+  const { likeCount, viewCount, commentCount } = videoData[0]?.statistics || {};
+
   return (
     <div className="px-5 mt-4">
-      <h1 className="text-xl font-semibold mb-2">
-        How to Extend or Limit the YouTube Quota Usage (YouTube Data API V3)
-      </h1>
+      <h1 className="text-xl font-semibold mb-2">{title}</h1>
 
       <div className="flex justify-between flex-wrap items-center">
         <div className="flex items-center space-x-4">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0evWy6vmua96UkF8RqHQv-SoBcuu3V9fwZw&s"
+            src={thumbnails?.default?.url}
             alt="channel"
             className="rounded-full w-12 h-12"
           />
           <div>
-            <div className="font-semibold">Nirman Sonawane</div>
-            <div className="text-sm text-gray-600">6 subscribers</div>
+            <div className="font-semibold">{channelTitle}</div>
+            <div className="text-sm text-gray-600">
+              {commentCount} subscribers
+            </div>
           </div>
           <button className="ml-4 bg-black text-white px-4 py-1 rounded-full flex items-center space-x-2">
             <span>Subscribe</span>
@@ -47,7 +51,7 @@ const VideoMeta = () => {
         </div>
 
         <div className="flex items-center space-x-3 mt-2 sm:mt-0">
-          <ActionButton icon="👍" label="42" />
+          <ActionButton icon="👍" label={likeCount} />
           <ActionButton icon="👎" />
           <ActionButton icon="🔗" label="Share" />
           <ActionButton icon="⬇️" label="Download" />
@@ -55,10 +59,13 @@ const VideoMeta = () => {
         </div>
       </div>
 
-      <div className="mt-3 text-sm text-gray-600">7.3K views • 5 years ago</div>
+      <div className="mt-3 text-sm text-gray-600">
+        {viewCount / 1000}k views • Posted on{" "}
+        {new Date(publishedAt).toLocaleDateString()}
+      </div>
 
       <div className="mt-2 bg-gray-100 p-3 rounded text-sm">
-        How to guide created from MyGuide-Creator Application ...
+        {description.slice(0, 100) + "..."}
       </div>
     </div>
   );
