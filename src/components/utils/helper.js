@@ -90,6 +90,57 @@ const funMessages = [
   "⚔️ Bina script ke bhi blockbuster hu main!",
 ];
 
+const texts = [
+  "Loved the explanation — super clear and easy to follow!",
+  "Could you share more resources on this topic?",
+  "I tried this approach and it improved my app’s speed noticeably.",
+  "Can someone explain the difference between useMemo and useCallback?",
+  "Thanks! That really helped clarify things.",
+  "Interesting take — I hadn't thought about it that way.",
+  "Does this work with server-side rendering too?",
+  "Any performance benchmarks to back this up?",
+  "I implemented this and my app broke. 😅 Help?",
+  "Great read. Looking forward to more posts like this!",
+  "The example was spot-on. Helped me understand quickly.",
+  "I think there’s a typo in the code snippet you shared.",
+  "Would you consider covering this topic in a video too?",
+  "How would this scale with multiple users or sessions?",
+  "The analogy you used made it click instantly!",
+  "You should write a book — your writing style is great.",
+  "Can this be used in a production-grade app?",
+  "Is there a way to make this work in older browsers?",
+  "What would you recommend as next steps after this?",
+  "Subscribed — please keep sharing these deep dives!",
+  "I was stuck for hours and this finally unblocked me!",
+  "Is this compatible with the latest React version?",
+  "Thanks! I used this in a real-world project yesterday.",
+  "I shared this with my team — very well done.",
+  "How would this interact with Redux or Zustand?",
+];
+
+const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+export const generateComment = (depth = 0, maxDepth = 2) => {
+  const comment = {
+    name: getRandom(indianNameList),
+    text: getRandom(texts),
+    replies: [],
+  };
+
+  if (depth < maxDepth && Math.random() < 0.6) {
+    const replyCount = Math.floor(Math.random() * 2) + 1;
+    for (let i = 0; i < replyCount; i++) {
+      comment.replies.push(generateComment(depth + 1, maxDepth));
+    }
+  }
+
+  return comment;
+};
+
+export const generateComments = (count = 5) => {
+  return Array.from({ length: count }, () => generateComment());
+};
+
 export function generateRandomMessage() {
   const name =
     indianNameList[Math.floor(Math.random() * indianNameList.length)];

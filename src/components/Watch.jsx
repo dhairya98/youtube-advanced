@@ -1,25 +1,27 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closeMenu } from "./utils/appSlice";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import CommentsContainer from "./CommentsContainer";
 import LiveChat from "./LiveChat";
+import VideoMeta from "./VideoMeta";
 
 const Watch = () => {
   const [searchParams] = useSearchParams();
-  console.log("Url search params", searchParams);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(closeMenu());
-  });
+  }, []);
+
+  const isHamburgerOpen = useSelector((store) => store.app.isMenuOpen);
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col flex-1">
       <div className="px-5 flex">
         <div>
           <iframe
-            width="1050"
+            width={isHamburgerOpen ? "800" : "1050"}
             height="600"
             src={
               "https://www.youtube.com/embed/" +
@@ -31,10 +33,12 @@ const Watch = () => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
+            className="rounded-lg"
             auto
           ></iframe>
+          <VideoMeta />
         </div>
-        <div className="w-full">
+        <div className="">
           <LiveChat />
         </div>
       </div>

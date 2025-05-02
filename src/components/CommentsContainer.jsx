@@ -1,58 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import { generateComments } from "./utils/helper";
 
-const commentsData = [
-  {
-    name: "Ananya Sharma",
-    text: "This article was really insightful, thanks for sharing!",
-    replies: [],
-  },
-  {
-    name: "Ravi Mehta",
-    text: "I have a question about the second point made above.",
-    replies: [
-      {
-        name: "Dhairya Anchal",
-        text: "Sure, what specifically do you want to understand better?",
-        replies: [],
-      },
-      {
-        name: "Ravi Mehta",
-        text: "Specifically the part about performance optimization in React.",
-        replies: [
-          {
-            name: "Dhairya Anchal",
-            text: "Ah, got it! It's about avoiding unnecessary re-renders using memoization.",
-            replies: [
-              {
-                name: "Ravi Mehta",
-                text: "Thanks! That cleared it up perfectly.",
-                replies: [],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Meera Jain",
-    text: "Would love to see more content like this. Subscribed!",
-    replies: [],
-  },
-];
-
-const CommentsList = ({ comments }) =>
-  comments.map((comment, id) => (
-    <div key={id}>
+const CommentsList = ({ comments }) => {
+  return comments.map((comment, id) => (
+    <div key={id} className="mt-5">
       <Comment data={comment} />
-      <div className="pl-5 border-l ml-5">
+      <div className="pl-5 ml-5">
         <CommentsList comments={comment.replies} />
       </div>
     </div>
   ));
+};
 const Comment = ({ data }) => {
   const { name, text, replies } = data;
-  console.log("Name and text", name, text);
 
   return (
     <div className="flex shadow-sm bg-gray-100 p-2 rounded-lg">
@@ -70,10 +30,42 @@ const Comment = ({ data }) => {
 };
 
 const CommentsContainer = () => {
+  const [videoComments, setVideoComments] = useState(generateComments());
+  const [commentInput, setCommentInput] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!commentInput.trim()) return;
+
+    const newComment = {
+      name: "Dhairya Anchal",
+      text: commentInput,
+      replies: [],
+    };
+
+    setVideoComments([newComment, ...videoComments]);
+    setCommentInput(""); // clear input
+  };
   return (
     <div className="m-5 p-2">
       <h1 className="text-2xl font-bold">Comments: </h1>
-      <CommentsList comments={commentsData} />
+      <form onSubmit={handleSubmit} className="w-full mt-4">
+        <div className="flex items-center border border-gray-300 rounded-full px-4 py-2 shadow-sm focus-within:ring-2 focus-within:ring-blue-500">
+          <input
+            type="text"
+            placeholder="Add a comment..."
+            className="flex-1 outline-none bg-transparent text-sm"
+            value={commentInput}
+            onChange={(e) => setCommentInput(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="ml-4 bg-blue-500 text-white text-sm px-4 py-1.5 rounded-full hover:bg-blue-600 transition cursor-pointer"
+          >
+            Add Comment
+          </button>
+        </div>
+      </form>
+      <CommentsList comments={videoComments} />
     </div>
   );
 };

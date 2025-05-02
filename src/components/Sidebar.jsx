@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { changeFilter } from "./utils/videoSlice";
 
 const Sidebar = () => {
@@ -59,7 +59,7 @@ const SidebarItem = ({ to, label }) => {
   const content = (
     <div
       className={`px-2 py-1 rounded hover:bg-gray-100 cursor-pointer 
-      ${isSelected ? "bg-gray-100" : ""}`}
+      ${isSelected ? "bg-gray-100" : ""} ${to ? "mb-2" : ""}`}
       onClick={() => handleClick(label)}
     >
       {label}
