@@ -40,4 +40,6 @@ const isShortVideo = (duration) => {
 
 // Autocomplete suggestions
 export const YOUTUBE_SEARCH_API = (query) =>
-  `https://clients1.google.com/complete/search?client=youtube&gs_ri=youtube&ds=yt&q=${query}`;
+  `${CORS_PROXY}${encodeURIComponent(
+    `https://clients1.google.com/complete/search?client=youtube&gs_ri=youtube&ds=yt&q=${query}`
+  )}`;
