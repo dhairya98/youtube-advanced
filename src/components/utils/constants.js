@@ -1,4 +1,5 @@
 const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
+const CORS_PROXY = "https://thingproxy.freeboard.io/fetch/";
 
 // Step 1: Search Videos
 export const searchYouTubeVideos = async (searchQuery = "") => {
@@ -6,37 +7,39 @@ export const searchYouTubeVideos = async (searchQuery = "") => {
     searchQuery
   )}&regionCode=IN&key=${YOUTUBE_API_KEY}`;
 
-  const searchResponse = await fetch(searchUrl);
+  const proxiedUrl = `${CORS_PROXY}${searchUrl}`;
+
+  const searchResponse = await fetch(proxiedUrl);
   const searchData = await searchResponse.json();
 
   const videoIds = searchData.items.map((item) => item.id.videoId).join(",");
   return videoIds;
 };
 
-// Step 2: Get Full Video Details (snippet + statistics + contentDetails)
+// Step 2: Get Full Video Details
 export const getYouTubeVideoDetails = async (videoIds) => {
   const detailsUrl = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=${videoIds}&key=${YOUTUBE_API_KEY}`;
+  const proxiedUrl = `${CORS_PROXY}${detailsUrl}`;
 
-  const detailsResponse = await fetch(detailsUrl);
+  const detailsResponse = await fetch(proxiedUrl);
   const detailsData = await detailsResponse.json();
 
-  // Filter out shorts
   const nonShorts = detailsData.items.filter((item) => {
     const duration = item.contentDetails.duration;
     return !isShortVideo(duration);
   });
 
-  return nonShorts.slice(0, 30); // LIMIT to 30 videos max
+  return nonShorts.slice(0, 30);
 };
 
-// Helper: Check if video is a Short
+// Check if a video is a shorts
 const isShortVideo = (duration) => {
-  // ISO format: PT45S, PT1M2S, etc
-  // if (duration?.includes("M") || duration?.includes("H")) {
-  //   return false; // not a short
-  // }
-  return false; // only seconds => short
+  // v2 work
+  return false;
 };
 
-export const YOUTUBE_SEARCH_API =
-  "https://clients1.google.com/complete/search?client=youtube&gs_ri=youtube&ds=yt&q=";
+// Autocomplete suggestions
+export const YOUTUBE_SEARCH_API = (query) =>
+  `${CORS_PROXY}${encodeURIComponent(
+    `https://clients1.google.com/complete/search?client=youtube&gs_ri=youtube&ds=yt&q=${query}`
+  )}`;

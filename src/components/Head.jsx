@@ -15,7 +15,7 @@ const Head = () => {
     dispatch(toggleMenu());
   };
   const getSearchSuggestions = async () => {
-    const response = await fetch(YOUTUBE_SEARCH_API + searchQuery);
+    const response = await fetch(YOUTUBE_SEARCH_API(searchQuery));
     const text = await response.text();
     const cleaned = text
       .replace(/^window\.google\.ac\.h\(/, "")
