@@ -1,5 +1,5 @@
 const YOUTUBE_API_KEY = "AIzaSyAM8wrfe3xo4m_TZR46XDw4qycQpbYpsCo";
-const CORS_PROXY = "";
+const CORS_PROXY = "https://thingproxy.freeboard.io/fetch/";
 
 // Step 1: Search Videos
 export const searchYouTubeVideos = async (searchQuery = "") => {
