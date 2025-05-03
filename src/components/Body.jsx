@@ -7,13 +7,17 @@ import Head from "./Head";
 const Body = () => {
   const isSidebarOpen = useSelector((store) => store.app.isMenuOpen);
   return (
-    <div className="flex">
+    <div>
       <Head />
-      <Sidebar />
-      <div
-        className={`${isSidebarOpen ? "ml-72" : "ml-0"} flex-1 overflow-y-auto`}
-      >
-        <Outlet />
+      <div className="flex">
+        <Sidebar />
+        <div
+          className={`${
+            isSidebarOpen ? "ml-72" : "ml-0"
+          } flex-1 overflow-y-auto`}
+        >
+          <Outlet />
+        </div>
       </div>
     </div>
   );

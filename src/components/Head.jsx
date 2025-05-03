@@ -44,6 +44,7 @@ const Head = () => {
     if (searchQuery.trim()) {
       navigate(`/search?v=${encodeURIComponent(searchQuery.trim())}`);
     }
+    setSearchSuggestions(null);
   };
 
   return (
