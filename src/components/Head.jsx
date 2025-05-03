@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "./utils/appSlice";
 import { YOUTUBE_SEARCH_API } from "./utils/constants";
 import { cacheResult } from "./utils/searchSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,6 +14,7 @@ const Head = () => {
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
   };
+  const navigate = useNavigate();
   const getSearchSuggestions = async () => {
     const response = await fetch(YOUTUBE_SEARCH_API(searchQuery));
     const text = await response.text();
@@ -38,6 +39,12 @@ const Head = () => {
       clearTimeout(timer);
     };
   }, [searchQuery]);
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/search?v=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <div className="flex items-center justify-between px-4 py-3 bg-white fixed top-0 z-50 min-h-[64px] w-screen">
@@ -67,8 +74,14 @@ const Head = () => {
             onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
             placeholder="Search"
             className="flex-1 px-4 py-2 border border-gray-400 rounded-l-full text-sm"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSearch();
+            }}
           />
-          <button className="px-4 py-2 border border-gray-400 border-l-0 bg-gray-100 rounded-r-full text-sm">
+          <button
+            className="px-4 py-2 border border-gray-400 border-l-0 bg-gray-100 rounded-r-full text-sm"
+            onClick={handleSearch}
+          >
             Search
           </button>
         </div>
@@ -77,14 +90,14 @@ const Head = () => {
           <div className="absolute top-12 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50">
             <ul>
               {searchSuggestions?.map((suggestion, i) => (
-                <Link to={"/search?v=" + suggestion}>
-                  <li
-                    key={i}
-                    className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                <li key={i} className="hover:bg-gray-100 cursor-pointer">
+                  <Link
+                    to={"/search?v=" + suggestion}
+                    className="block px-4 py-2 text-sm w-full h-full"
                   >
                     {suggestion}
-                  </li>
-                </Link>
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
