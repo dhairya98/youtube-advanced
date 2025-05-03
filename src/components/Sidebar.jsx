@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { changeFilter } from "./utils/videoSlice";
 
 const Sidebar = () => {
@@ -46,10 +46,10 @@ const SidebarItem = ({ to, label }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleClick = (item) => {
-    const value = item === "All" ? "" : item;
+    const value = item === "All" || item === "Home" ? "hindi" : item;
     if (selectedFilter !== value) {
       dispatch(changeFilter(value));
-      navigate("/");
+      setTimeout(() => navigate(to), 0);
     }
   };
   const isSelected = selectedFilter === label;
@@ -62,7 +62,7 @@ const SidebarItem = ({ to, label }) => {
       {label}
     </div>
   );
-  return to ? <Link to={to}>{content}</Link> : content;
+  return content;
 };
 
 export default Sidebar;

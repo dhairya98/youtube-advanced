@@ -8,8 +8,12 @@ const videoSlice = createSlice({
   },
   reducers: {
     changeFilter: (state, action) => {
-      if (state.selectedFilter !== action.payload) {
-        state.selectedFilter = action.payload;
+      const current = state.selectedFilter;
+      const next = action.payload;
+
+      console.log("Filter changed to:", next, current);
+      if (current !== next) {
+        state.selectedFilter = next;
       }
     },
   },

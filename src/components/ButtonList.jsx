@@ -18,7 +18,7 @@ const list = [
 const ButtonList = ({ selectedButton }) => {
   const dispatch = useDispatch();
   const handleClick = (item) => {
-    const value = item === "All" ? "" : item;
+    const value = item === "All" ? "hindi" : item;
     if (selectedButton !== value) {
       dispatch(changeFilter(value));
     }

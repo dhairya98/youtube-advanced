@@ -13,7 +13,7 @@ const SearchResults = () => {
   const [searchParams] = useSearchParams();
   useEffect(() => {
     dispatch(changeFilter(searchParams.get("v")));
-  });
+  }, [searchParams]);
   return (
     <div className="mt-14">
       {videos && (

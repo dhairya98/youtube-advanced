@@ -50,7 +50,7 @@ const VideoMeta = ({ videoData }) => {
           </button>
         </div>
 
-        <div className="flex items-center space-x-3 mt-2 sm:mt-0">
+        <div className="flex flex-wrap items-center space-x-3 mt-2 sm:mt-0">
           <ActionButton icon="👍" label={likeCount} />
           <ActionButton icon="👎" />
           <ActionButton icon="🔗" label="Share" />
