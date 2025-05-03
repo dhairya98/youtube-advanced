@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "./utils/appSlice";
-import { YOUTUBE_SEARCH_API } from "./utils/constants";
+import { fetchSuggestions } from "./utils/constants";
 import { cacheResult } from "./utils/searchSlice";
 import { Link, useNavigate } from "react-router-dom";
+
+const maxSearches = 5;
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [searchCount, setSearchCount] = useState(0);
   const cache = useSelector((store) => store.search);
   const dispatch = useDispatch();
   const toggleMenuHandler = () => {
@@ -16,7 +19,7 @@ const Head = () => {
   };
   const navigate = useNavigate();
   const getSearchSuggestions = async () => {
-    const response = await fetch(YOUTUBE_SEARCH_API(searchQuery));
+    const response = await fetch(fetchSuggestions(searchQuery));
     const text = await response.text();
     const cleaned = text
       .replace(/^window\.google\.ac\.h\(/, "")
@@ -41,9 +44,15 @@ const Head = () => {
   }, [searchQuery]);
 
   const handleSearch = () => {
-    if (searchQuery.trim()) {
-      navigate(`/search?v=${encodeURIComponent(searchQuery.trim())}`);
+    if (!searchQuery.trim()) return;
+
+    if (searchCount >= maxSearches) {
+      alert("Search limit reached. Please refresh or wait.");
+      return;
     }
+
+    setSearchCount((prev) => prev + 1);
+    navigate(`/search?v=${encodeURIComponent(searchQuery.trim())}`);
     setSearchSuggestions(null);
   };
 
@@ -66,6 +75,11 @@ const Head = () => {
       </div>
 
       <div className="relative flex flex-1 justify-center max-w-2xl">
+        {searchCount < maxSearches && (
+          <p className="absolute top-full text-xs text-gray-500">
+            {maxSearches - searchCount} searches remaining
+          </p>
+        )}
         <div className="flex w-full max-w-xl">
           <input
             type="text"
