@@ -20,13 +20,11 @@ const Head = () => {
   const navigate = useNavigate();
   const getSearchSuggestions = async () => {
     const response = await fetch(YOUTUBE_SEARCH_API(searchQuery));
-    const text = await response.text();
-    const cleaned = text
-      .replace(/^window\.google\.ac\.h\(/, "")
-      .replace(/\);?$/, "");
-    const parsed = JSON.parse(cleaned);
-
-    const suggestions = parsed[1].map((item) => item[0]);
+    console.log("Response", response);
+    const data = await response.json();
+    console.log("Data", data);
+    const suggestions = data.items.map((item) => item.snippet.title);
+    console.log("Suggestions", suggestions);
     setSearchSuggestions(suggestions);
     dispatch(cacheResult({ [searchQuery]: suggestions }));
   };

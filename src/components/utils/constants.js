@@ -40,6 +40,6 @@ const isShortVideo = (duration) => {
 
 // Autocomplete suggestions
 export const YOUTUBE_SEARCH_API = (query) =>
-  `https://thingproxy.freeboard.io/fetch/https://clients1.google.com/complete/search?client=youtube&gs_ri=youtube&ds=yt&q=${encodeURIComponent(
+  `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q=${encodeURIComponent(
     query
-  )}`;
+  )}&key=${YOUTUBE_API_KEY}`;
