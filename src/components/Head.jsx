@@ -19,7 +19,7 @@ const Head = () => {
   };
   const navigate = useNavigate();
   const getSearchSuggestions = async () => {
-    const response = await fetch(fetchSuggestions(searchQuery));
+    const response = await fetch(YOUTUBE_SEARCH_API(searchQuery));
     const text = await response.text();
     const cleaned = text
       .replace(/^window\.google\.ac\.h\(/, "")
