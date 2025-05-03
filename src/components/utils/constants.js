@@ -7,7 +7,7 @@ export const searchYouTubeVideos = async (searchQuery = "") => {
     searchQuery
   )}&regionCode=IN&key=${YOUTUBE_API_KEY}`;
 
-  const proxiedUrl = `${CORS_PROXY}${searchUrl}`;
+  const proxiedUrl = `${searchUrl}`;
 
   const searchResponse = await fetch(proxiedUrl);
   const searchData = await searchResponse.json();
@@ -19,7 +19,7 @@ export const searchYouTubeVideos = async (searchQuery = "") => {
 // Step 2: Get Full Video Details
 export const getYouTubeVideoDetails = async (videoIds) => {
   const detailsUrl = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=${videoIds}&key=${YOUTUBE_API_KEY}`;
-  const proxiedUrl = `${CORS_PROXY}${detailsUrl}`;
+  const proxiedUrl = `${detailsUrl}`;
 
   const detailsResponse = await fetch(proxiedUrl);
   const detailsData = await detailsResponse.json();
