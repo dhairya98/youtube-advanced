@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "./utils/appSlice";
-import { fetchSuggestions } from "./utils/constants";
+import { YOUTUBE_SEARCH_API } from "./utils/constants";
 import { cacheResult } from "./utils/searchSlice";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -44,16 +44,9 @@ const Head = () => {
   }, [searchQuery]);
 
   const handleSearch = () => {
-    if (!searchQuery.trim()) return;
-
-    if (searchCount >= maxSearches) {
-      alert("Search limit reached. Please refresh or wait.");
-      return;
+    if (searchQuery.trim()) {
+      navigate(`/search?v=${encodeURIComponent(searchQuery.trim())}`);
     }
-
-    setSearchCount((prev) => prev + 1);
-    navigate(`/search?v=${encodeURIComponent(searchQuery.trim())}`);
-    setSearchSuggestions(null);
   };
 
   return (
@@ -75,11 +68,11 @@ const Head = () => {
       </div>
 
       <div className="relative flex flex-1 justify-center max-w-2xl">
-        {searchCount < maxSearches && (
+        {/* {searchCount < maxSearches && (
           <p className="absolute top-full text-xs text-gray-500">
             {maxSearches - searchCount} searches remaining
           </p>
-        )}
+        )} */}
         <div className="flex w-full max-w-xl">
           <input
             type="text"
