@@ -4,11 +4,11 @@ import VideoContainer from "./VideoContainer";
 import { useVideoSearch } from "./utils/useVideoSearch";
 
 const MainContainer = () => {
-  const { videos, selectedFilter } = useVideoSearch();
+  const { videos, selectedFilter, loading, error } = useVideoSearch();
   return (
     <div className="mt-15">
       <ButtonList selectedButton={selectedFilter} />
-      <VideoContainer videos={videos} />
+      <VideoContainer videos={videos} loading={loading} error={error} />
     </div>
   );
 };

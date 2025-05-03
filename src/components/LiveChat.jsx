@@ -11,7 +11,7 @@ const LiveChat = () => {
   const dispatch = useDispatch();
   const isHamburgerOpen = useSelector((store) => store.app.isMenuOpen);
   const liveChatMessage = useSelector((store) => store.liveChat.messages);
-  const { videos } = useVideoSearch();
+  const { videos, loading, error } = useVideoSearch();
   useEffect(() => {
     const timer = setInterval(() => {
       const { name, message } = generateRandomMessage();
@@ -60,7 +60,12 @@ const LiveChat = () => {
         />
         <button className="px-2 mx-2 bg-green-100">Send</button>
       </form>
-      <VideoContainer videos={videos.slice(0, 20)} watch={true} />
+      <VideoContainer
+        videos={videos.slice(0, 20)}
+        watch={true}
+        loading={loading}
+        error={error}
+      />
     </>
   );
 };

@@ -8,7 +8,7 @@ import Head from "./Head";
 
 const SearchResults = () => {
   const selectedFilter = useSelector((state) => state.videoData.selectedFilter);
-  const { videos } = useVideoSearch();
+  const { videos, loading, error } = useVideoSearch();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   useEffect(() => {
@@ -19,7 +19,12 @@ const SearchResults = () => {
       {videos && (
         <div>
           {/* <Head /> */}
-          <VideoContainer videos={videos} search={true} />
+          <VideoContainer
+            videos={videos}
+            search={true}
+            loading={loading}
+            error={error}
+          />
         </div>
       )}
     </div>
