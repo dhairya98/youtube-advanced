@@ -20,7 +20,7 @@ export const searchYouTubeVideos = async (searchQuery = "") => {
 export const getYouTubeVideoDetails = async (videoIds) => {
   const detailsUrl = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=${videoIds}&key=${YOUTUBE_API_KEY}`;
   const proxiedUrl = `${detailsUrl}`;
-
+  console.log("Proxy", proxiedUrl);
   const detailsResponse = await fetch(proxiedUrl);
   const detailsData = await detailsResponse.json();
 
