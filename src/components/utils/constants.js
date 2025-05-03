@@ -1,5 +1,5 @@
-const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
-const CORS_PROXY = "https://thingproxy.freeboard.io/fetch/";
+const YOUTUBE_API_KEY = "AIzaSyAM8wrfe3xo4m_TZR46XDw4qycQpbYpsCo";
+const CORS_PROXY = "";
 
 // Step 1: Search Videos
 export const searchYouTubeVideos = async (searchQuery = "") => {
@@ -40,6 +40,4 @@ const isShortVideo = (duration) => {
 
 // Autocomplete suggestions
 export const YOUTUBE_SEARCH_API = (query) =>
-  `${CORS_PROXY}${encodeURIComponent(
-    `https://clients1.google.com/complete/search?client=youtube&gs_ri=youtube&ds=yt&q=${query}`
-  )}`;
+  `https://clients1.google.com/complete/search?client=youtube&gs_ri=youtube&ds=yt&q=${query}`;
