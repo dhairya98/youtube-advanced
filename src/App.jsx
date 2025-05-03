@@ -7,23 +7,28 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainContainer from "./components/MainContainer";
 import Watch from "./components/Watch";
 import SearchResults from "./components/SearchResults";
+import ErrorPage from "./components/ErrorPage";
 
 const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <Body />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
         element: <MainContainer />,
+        errorElement: <ErrorPage />,
       },
       {
         path: "/search",
         element: <SearchResults />,
+        errorElement: <ErrorPage />,
       },
       {
         path: "/watch",
         element: <Watch />,
+        errorElement: <ErrorPage />,
       },
     ],
   },
