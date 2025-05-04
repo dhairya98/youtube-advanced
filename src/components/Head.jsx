@@ -4,6 +4,7 @@ import { toggleMenu } from "./utils/appSlice";
 import { YOUTUBE_SEARCH_API } from "./utils/constants";
 import { cacheResult } from "./utils/searchSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { changeFilter } from "./utils/videoSlice";
 
 const maxSearches = 5;
 
@@ -11,7 +12,6 @@ const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [searchCount, setSearchCount] = useState(0);
   const cache = useSelector((store) => store.search);
   const dispatch = useDispatch();
   const toggleMenuHandler = () => {
@@ -19,12 +19,8 @@ const Head = () => {
   };
   const navigate = useNavigate();
   const getSearchSuggestions = async () => {
-    const response = await fetch(YOUTUBE_SEARCH_API(searchQuery));
-    console.log("Response", response);
-    const data = await response.json();
-    console.log("Data", data);
-    const suggestions = data.items.map((item) => item.snippet.title);
-    console.log("Suggestions", suggestions);
+    const data = await YOUTUBE_SEARCH_API(searchQuery);
+    const suggestions = data.map((item) => item.snippet.title);
     setSearchSuggestions(suggestions);
     dispatch(cacheResult({ [searchQuery]: suggestions }));
   };
@@ -56,13 +52,15 @@ const Head = () => {
           className="h-6 w-6 cursor-pointer"
           onClick={toggleMenuHandler}
         />
-        <Link to="/">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Logo_of_YouTube_%282015-2017%29.svg/1280px-Logo_of_YouTube_%282015-2017%29.svg.png"
-            alt="YouTube"
-            className="h-6"
-          />
-        </Link>
+        <span onClick={() => dispatch(changeFilter("hindi"))}>
+          <Link to="/">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Logo_of_YouTube_%282015-2017%29.svg/1280px-Logo_of_YouTube_%282015-2017%29.svg.png"
+              alt="YouTube"
+              className="h-6"
+            />
+          </Link>
+        </span>
       </div>
 
       <div className="relative flex flex-1 justify-center max-w-2xl">
@@ -96,13 +94,15 @@ const Head = () => {
           <div className="absolute top-12 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50">
             <ul>
               {searchSuggestions?.map((suggestion, i) => (
-                <li key={i} className="hover:bg-gray-100 cursor-pointer">
-                  <Link
-                    to={"/search?v=" + suggestion}
-                    className="block px-4 py-2 text-sm w-full h-full"
-                  >
-                    {suggestion}
-                  </Link>
+                <li
+                  key={i}
+                  onClick={() => {
+                    dispatch(changeFilter(suggestion));
+                    navigate("/search?v=" + encodeURIComponent(suggestion));
+                  }}
+                  className="hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm"
+                >
+                  {suggestion}
                 </li>
               ))}
             </ul>
