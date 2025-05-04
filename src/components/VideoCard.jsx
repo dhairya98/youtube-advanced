@@ -6,7 +6,7 @@ const VideoCard = ({ info, watch, search }) => {
 
   return (
     <div
-      className={`flex ${
+      className={`transition-transform duration-200 hover:scale-105 hover:shadow-lg rounded-lg flex ${
         watch || search ? "p-2 flex-row items-start" : "p-2 m-2 flex-col"
       }`}
     >

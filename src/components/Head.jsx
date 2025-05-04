@@ -57,7 +57,7 @@ const Head = () => {
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Logo_of_YouTube_%282015-2017%29.svg/1280px-Logo_of_YouTube_%282015-2017%29.svg.png"
               alt="YouTube"
-              className="h-6"
+              className="h-6 w-20 object-contain flex-shrink-0"
             />
           </Link>
         </span>
@@ -77,7 +77,7 @@ const Head = () => {
             onFocus={() => setShowSuggestions(true)}
             onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
             placeholder="Search"
-            className="flex-1 px-4 py-2 border border-gray-400 rounded-l-full text-sm"
+            className="flex-1 px-4 py-2 border border-gray-400 rounded-l-full text-sm ml-2"
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSearch();
             }}
